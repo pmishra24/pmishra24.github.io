@@ -1,0 +1,25 @@
+
+#back1{
+    background-image: url("../Images/back1.jfif");
+    width:100%;
+    height:400px;
+	background-repeat:no-repeat;
+
+}
+
+legand
+{
+    color:black;
+}
+#p,#q,#r
+{
+    background-color:lightgray;
+}
+#k
+{
+   
+}
+#t{
+   
+     background-color:darkgrey;
+}
