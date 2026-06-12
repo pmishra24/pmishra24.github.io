@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prashant Mishra — Software Engineer</title>
+<meta name="description" content="Prashant Mishra · Software Engineer in Dublin · C#, .NET Core, Python · Backend APIs, microservices and cloud.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A1220;
+    --bg2:#0D1729;
+    --panel:#101D33;
+    --panel2:#142340;
+    --line:#1D2E4D;
+    --line2:#28406B;
+    --ink:#E8EFFB;
+    --muted:#8DA2C4;
+    --dim:#5C7194;
+    --signal:#4D8DFF;
+    --signal-soft:rgba(77,141,255,.12);
+    --ok:#34D399;
+    --ok-soft:rgba(52,211,153,.12);
+    --amber:#FFC777;
+    --glow:rgba(77,141,255,.35);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--signal);color:#fff}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:var(--signal);text-decoration:none}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:2px}
+
+  /* background grid */
+  .grid-bg{
+    position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:.22;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+  }
+  .glow-orb{
+    position:fixed;z-index:-1;pointer-events:none;border-radius:50%;
+    filter:blur(120px);opacity:.16;
+  }
+  .orb1{width:560px;height:560px;background:var(--signal);top:-200px;right:-140px}
+  .orb2{width:420px;height:420px;background:#7C5CFF;bottom:-180px;left:-160px;opacity:.10}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,18,32,.82);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+  .nav-name{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 108;font-weight:700;font-size:16px;letter-spacing:-.01em;color:var(--ink)}
+  .nav-links{display:flex;gap:24px;list-style:none}
+  .nav-links a{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:.02em;padding:4px 0;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+  .nav-links a::before{content:"/";color:var(--dim);margin-right:2px}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links a.active{color:var(--signal);border-bottom-color:var(--signal)}
+  .nav-clock{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--dim);white-space:nowrap}
+  @media(max-width:760px){.nav-links{display:none}.nav-clock{display:none}}
+
+  /* ---------- hero ---------- */
+  header{padding:88px 0 76px;border-bottom:1px solid var(--line)}
+  .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:start}
+  @media(max-width:920px){.hero-grid{grid-template-columns:1fr;gap:44px}}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    color:var(--ok);background:var(--ok-soft);border:1px solid rgba(52,211,153,.25);
+    padding:5px 13px;border-radius:99px;margin-bottom:24px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok);animation:pulse 2.2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{
+    font-family:'Archivo',sans-serif;
+    font-variation-settings:'wdth' 112;
+    font-weight:760;
+    font-size:clamp(38px,5.4vw,56px);
+    line-height:1.04;
+    letter-spacing:-.022em;
+    margin-bottom:18px;
+    min-height:2.1em;
+  }
+  h1 .typed{color:var(--signal)}
+  h1 .caret{display:inline-block;width:3px;height:.92em;background:var(--signal);margin-left:3px;vertical-align:-.08em;animation:blink 1s step-end infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero-sub{font-size:16.5px;color:var(--muted);max-width:46ch;margin-bottom:30px}
+  .hero-sub strong{color:var(--ink);font-weight:600}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:500;
+    padding:11px 20px;border-radius:9px;border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s, color .15s;
+    cursor:pointer;
+  }
+  .btn:hover{transform:translateY(-2px);text-decoration:none}
+  .btn-primary{background:var(--signal);color:#06101F}
+  .btn-primary:hover{box-shadow:0 8px 26px var(--glow)}
+  .btn-ghost{border-color:var(--line2);color:var(--ink);background:var(--panel)}
+  .btn-ghost:hover{border-color:var(--signal);color:var(--signal)}
+
+  /* ---------- interactive terminal ---------- */
+  .terminal{
+    background:linear-gradient(180deg,#0B1526,#0A1322);
+    border:1px solid var(--line2);
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.7), 0 0 0 1px rgba(77,141,255,.06), 0 0 60px -20px var(--glow);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    display:flex;flex-direction:column;
+  }
+  .terminal-bar{
+    display:flex;align-items:center;gap:10px;
+    padding:11px 16px;border-bottom:1px solid var(--line);
+    color:var(--dim);font-size:12px;user-select:none;
+  }
+  .terminal-bar .dots{display:flex;gap:6px}
+  .terminal-bar .dots span{width:10px;height:10px;border-radius:50%}
+  .terminal-bar .dots span:nth-child(1){background:#FF5F57}
+  .terminal-bar .dots span:nth-child(2){background:#FEBC2E}
+  .terminal-bar .dots span:nth-child(3){background:#28C840}
+  .terminal-bar .hint{margin-left:auto;font-size:11px;color:var(--dim)}
+  .terminal-body{
+    padding:16px 18px;color:#C7D5EA;line-height:1.7;
+    height:340px;overflow-y:auto;cursor:text;
+  }
+  .terminal-body::-webkit-scrollbar{width:8px}
+  .terminal-body::-webkit-scrollbar-thumb{background:var(--line2);border-radius:4px}
+  .t-cmd{color:#9FB6DC}
+  .t-prompt{color:var(--ok);font-weight:600}
+  .t-ok{color:var(--ok);font-weight:600}
+  .t-key{color:#6E84A8}
+  .t-str{color:#9CC6FF}
+  .t-num{color:var(--amber)}
+  .t-dim{color:var(--dim)}
+  .t-err{color:#FF7B72}
+  .t-link{color:#9CC6FF;text-decoration:underline;text-underline-offset:3px}
+  .terminal-input-row{display:flex;gap:8px;align-items:center;padding:0}
+  .terminal-input{
+    flex:1;background:transparent;border:none;color:#E8EFFB;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;outline:none;
+    caret-color:var(--ok);
+  }
+  .terminal-body div{white-space:pre-wrap;word-break:break-word}
+
+  /* ---------- sections ---------- */
+  section{padding:84px 0;border-bottom:1px solid var(--line)}
+  .section-head{display:flex;align-items:baseline;gap:16px;margin-bottom:46px;flex-wrap:wrap}
+  .endpoint{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--signal);background:var(--signal-soft);border:1px solid rgba(77,141,255,.25);
+    padding:4px 12px;border-radius:6px;
+  }
+  .endpoint .verb{color:var(--ok);margin-right:8px}
+  h2{
+    font-family:'Archivo',sans-serif;
+    font-variation-settings:'wdth' 108;
+    font-weight:700;font-size:clamp(26px,3.4vw,34px);
+    letter-spacing:-.015em;
+  }
+
+  /* metrics */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media(max-width:820px){.metrics{grid-template-columns:repeat(2,1fr)}}
+  .metric{
+    background:var(--panel);border:1px solid var(--line);border-radius:13px;
+    padding:26px 22px;position:relative;overflow:hidden;
+    transition:border-color .2s, transform .2s;
+  }
+  .metric:hover{border-color:var(--signal);transform:translateY(-3px)}
+  .metric::after{
+    content:"";position:absolute;top:0;left:0;right:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--signal),transparent);
+    opacity:0;transition:opacity .2s;
+  }
+  .metric:hover::after{opacity:1}
+  .metric .val{font-family:'IBM Plex Mono',monospace;font-size:32px;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+  .metric .val .u{color:var(--signal)}
+  .metric .lab{font-size:13px;color:var(--muted);margin-top:8px}
+
+  /* experience timeline */
+  .timeline{position:relative;padding-left:34px}
+  .timeline::before{
+    content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--signal),var(--line) 85%);
+    border-radius:2px;
+  }
+  .xp{position:relative;padding:0 0 50px}
+  .xp:last-child{padding-bottom:0}
+  .xp::before{
+    content:"";position:absolute;left:-34px;top:7px;width:16px;height:16px;border-radius:50%;
+    background:var(--bg);border:3px solid var(--signal);
+    box-shadow:0 0 0 4px var(--bg), 0 0 14px var(--glow);
+    transition:transform .2s;
+  }
+  .xp:hover::before{transform:scale(1.25)}
+  .xp-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:28px 28px 22px;transition:border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .xp-card:hover{border-color:var(--line2);box-shadow:0 16px 44px -22px rgba(0,0,0,.7);transform:translateX(4px)}
+  .xp-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:4px}
+  .xp-card h3{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 105;font-size:21px;font-weight:680;letter-spacing:-.01em}
+  .period{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--dim);background:var(--bg2);border:1px solid var(--line);padding:3px 10px;border-radius:6px;white-space:nowrap}
+  .role{font-size:14px;color:var(--signal);font-weight:500;margin-bottom:6px;font-family:'IBM Plex Mono',monospace}
+  .role .loc{color:var(--dim);font-weight:400}
+  .xp-card ul{list-style:none;margin-top:12px}
+  .xp-card li{position:relative;padding-left:22px;margin-bottom:9px;color:#AFC2DF;font-size:14.5px}
+  .xp-card li::before{content:"›";position:absolute;left:2px;top:0;color:var(--signal);font-weight:700;font-family:'IBM Plex Mono',monospace}
+  .xp-card li strong{color:var(--ink);font-weight:600}
+  .xp-card li mark{background:transparent;color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:13.5px}
+
+  /* skills — interactive filter */
+  .skill-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+  .filter-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    background:var(--panel);border:1px solid var(--line);color:var(--muted);
+    padding:8px 16px;border-radius:99px;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .filter-btn:hover{border-color:var(--signal);color:var(--ink)}
+  .filter-btn.active{background:var(--signal);border-color:var(--signal);color:#06101F}
+  .tags{display:flex;flex-wrap:wrap;gap:10px}
+  .tag{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+    background:var(--panel);border:1px solid var(--line);
+    padding:9px 16px;border-radius:8px;color:var(--ink);
+    transition:all .25s ease;cursor:default;
+  }
+  .tag:hover{border-color:var(--signal);background:var(--signal-soft);transform:translateY(-2px)}
+  .tag .cat{color:var(--dim);font-size:11px;margin-left:8px}
+  .tag.hide{opacity:.12;transform:scale(.96);pointer-events:none}
+
+  /* education */
+  .edu{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.edu{grid-template-columns:1fr}}
+  .edu-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;
+    transition:border-color .2s, transform .2s;
+  }
+  .edu-card:hover{border-color:var(--signal);transform:translateY(-3px)}
+  .edu-card .yr{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--signal)}
+  .edu-card h3{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 105;font-size:19px;font-weight:680;margin:10px 0 4px}
+  .edu-card p{font-size:14.5px;color:var(--muted)}
+
+  /* contact */
+  .contact-band{
+    position:relative;overflow:hidden;
+    background:linear-gradient(135deg,var(--panel2),var(--panel));
+    border:1px solid var(--line2);
+    border-radius:18px;padding:56px 52px;
+    display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap;
+  }
+  @media(max-width:640px){.contact-band{padding:38px 28px}}
+  .contact-band::before{
+    content:"";position:absolute;top:-60%;right:-10%;width:420px;height:420px;border-radius:50%;
+    background:var(--signal);filter:blur(130px);opacity:.14;pointer-events:none;
+  }
+  .contact-band h2{margin-bottom:12px}
+  .contact-band p{color:var(--muted);max-width:44ch;font-size:15.5px}
+  .contact-links{display:flex;flex-direction:column;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:14px;position:relative}
+  .contact-links a{color:#9CC6FF;transition:color .15s, transform .15s;display:inline-block}
+  .contact-links a:hover{color:#fff;transform:translateX(4px);text-decoration:none}
+  .contact-links .k{color:var(--dim);margin-right:10px}
+
+  footer{padding:36px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:12.5px}
+  footer .up{color:var(--ok)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="glow-orb orb1" aria-hidden="true"></div>
+<div class="glow-orb orb2" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a href="#top" class="nav-name">Prashant Mishra</a>
+    <ul class="nav-links">
+      <li><a href="#experience" data-spy>experience</a></li>
+      <li><a href="#skills" data-spy>skills</a></li>
+      <li><a href="#education" data-spy>education</a></li>
+      <li><a href="#contact" data-spy>contact</a></li>
+    </ul>
+    <span class="nav-clock" id="clock">--:--:-- IST</span>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>status: available · Dublin, IE</span>
+      <h1>I build backend systems that <span class="typed" id="typed"></span><span class="caret" id="caret"></span></h1>
+      <p class="hero-sub"><strong>Prashant Mishra</strong> — software engineer with 5+ years shipping enterprise-grade APIs, microservices and cloud platforms in <strong>C#, .NET Core and Python</strong>. Currently at Prime19; previously Cognizant (Pune &amp; Amsterdam) and Maynooth University.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="mailto:mishraprashant494@gmail.com">→ Get in touch</a>
+        <a class="btn btn-ghost" href="https://github.com/pmishra24" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/prashantmishra-648252168" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="terminal" aria-label="Interactive terminal — type help to explore">
+      <div class="terminal-bar">
+        <span class="dots"><span></span><span></span><span></span></span>
+        prashant@dublin — zsh
+        <span class="hint">it's real — try typing <b style="color:#9CC6FF">help</b></span>
+      </div>
+      <div class="terminal-body" id="term-body">
+        <div id="term-log"></div>
+        <div class="terminal-input-row">
+          <span class="t-prompt">➜&nbsp;~</span>
+          <input class="terminal-input" id="term-input" type="text" autocomplete="off" spellcheck="false" aria-label="Terminal input">
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="metrics" style="padding:60px 0">
+  <div class="wrap">
+    <div class="metrics">
+      <div class="metric reveal"><div class="val"><span data-count="99.9" data-dec="1">0</span><span class="u">%</span></div><div class="lab">Production uptime on AWS with blue/green deploys</div></div>
+      <div class="metric reveal"><div class="val"><span data-count="10">0</span>k<span class="u">+</span></div><div class="lab">Concurrent requests handled in tuned stored procedures</div></div>
+      <div class="metric reveal"><div class="val"><span data-count="15">0</span><span class="u">+</span></div><div class="lab">RESTful APIs shipped in C# / .NET Core 6+</div></div>
+      <div class="metric reveal"><div class="val"><span data-count="95">0</span><span class="u">%</span></div><div class="lab">Skill-matching accuracy in NER extraction pipeline</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="endpoint"><span class="verb">GET</span>/experience</span>
+      <h2>Where I've built things</h2>
+    </div>
+
+    <div class="timeline">
+      <div class="xp reveal">
+        <div class="xp-card">
+          <div class="xp-top"><h3>Prime19</h3><span class="period">May 2026 — Present</span></div>
+          <div class="role">Software Engineer <span class="loc">· Dublin, IE</span></div>
+          <ul>
+            <li>Building software products and consulting solutions for enterprise clients, focused on <strong>scalable backend services</strong> and cloud deployment.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="xp reveal">
+        <div class="xp-card">
+          <div class="xp-top"><h3>IRESI · Maynooth University</h3><span class="period">Oct 2025 — May 2026</span></div>
+          <div class="role">Software Engineer (Contract) <span class="loc">· Maynooth, IE</span></div>
+          <ul>
+            <li>Architected an <strong>AI-powered career diagnostic platform</strong> (Python, .NET Core) from zero to live production — <mark>−50%</mark> job-search time for users.</li>
+            <li>Built a .NET Core ingestion service for a third-party jobs API, normalising <strong>10,000+ job records</strong> — <mark>−60%</mark> data latency.</li>
+            <li>Engineered an NER-based <strong>skill extraction pipeline</strong> — <mark>95%+</mark> matching accuracy across 6 REST endpoints.</li>
+            <li>Deployed to <strong>AWS EC2</strong> (Nginx, Gunicorn, systemd) with blue/green zero-downtime releases — <mark>&lt;2s</mark> responses at <mark>99.9%</mark> uptime.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="xp reveal">
+        <div class="xp-card">
+          <div class="xp-top"><h3>Cognizant</h3><span class="period">Aug 2022 — Aug 2024</span></div>
+          <div class="role">Software Engineer — Senior Associate <span class="loc">· Amsterdam, NL</span></div>
+          <ul>
+            <li>Engineered <strong>15+ scalable RESTful APIs</strong> in C# / .NET Core 6+ with secure auth — <mark>−35%</mark> critical vulnerabilities, 100% Windows/Ubuntu compatibility.</li>
+            <li>Led migration of <strong>5+ mission-critical databases</strong> from Oracle to MySQL/PostgreSQL — <mark>+30%</mark> performance, <mark>−15%</mark> maintenance cost.</li>
+            <li>Resolved performance issues in stored procedures at <strong>10,000+ concurrent requests</strong> — <mark>−40%</mark> query execution time.</li>
+            <li>Delivered <strong>GDPR and ISO-compliant</strong> releases with 5+ cross-functional teams across 3 major launches.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="xp reveal">
+        <div class="xp-card">
+          <div class="xp-top"><h3>Cognizant</h3><span class="period">Jun 2019 — Aug 2022</span></div>
+          <div class="role">Software Engineer — Associate <span class="loc">· Pune, IN</span></div>
+          <ul>
+            <li>Designed automated unit-testing frameworks (NUnit, xUnit) — <mark>95%</mark> code coverage, <mark>−40%</mark> manual testing via TDD.</li>
+            <li>Managed delivery across 5 client projects — <mark>100%</mark> on-time within SLAs, zero scope creep across 10+ stakeholders.</li>
+            <li>Automated deployments with Azure DevOps — <mark>−30%</mark> production defects, <mark>−25%</mark> deploy cycle time.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="endpoint"><span class="verb">GET</span>/skills</span>
+      <h2>What I work with</h2>
+    </div>
+
+    <div class="skill-filters reveal" role="tablist" aria-label="Filter skills by category">
+      <button class="filter-btn active" data-filter="all">all</button>
+      <button class="filter-btn" data-filter="backend">backend</button>
+      <button class="filter-btn" data-filter="data">data</button>
+      <button class="filter-btn" data-filter="cloud">cloud &amp; devops</button>
+      <button class="filter-btn" data-filter="security">security</button>
+      <button class="filter-btn" data-filter="practice">practices</button>
+    </div>
+
+    <div class="tags reveal" id="skill-tags">
+      <span class="tag" data-cat="backend">C#</span>
+      <span class="tag" data-cat="backend">.NET Core 6+</span>
+      <span class="tag" data-cat="backend">Python</span>
+      <span class="tag" data-cat="backend">REST API design</span>
+      <span class="tag" data-cat="backend">Microservices</span>
+      <span class="tag" data-cat="backend">Clean Architecture</span>
+      <span class="tag" data-cat="data">SQL Server</span>
+      <span class="tag" data-cat="data">PostgreSQL</span>
+      <span class="tag" data-cat="data">MySQL</span>
+      <span class="tag" data-cat="data">Query optimisation</span>
+      <span class="tag" data-cat="data">Indexing</span>
+      <span class="tag" data-cat="data">Stored procedures</span>
+      <span class="tag" data-cat="data">Oracle → PostgreSQL migration</span>
+      <span class="tag" data-cat="cloud">Azure</span>
+      <span class="tag" data-cat="cloud">AWS EC2</span>
+      <span class="tag" data-cat="cloud">Docker</span>
+      <span class="tag" data-cat="cloud">Azure DevOps CI/CD</span>
+      <span class="tag" data-cat="cloud">Nginx · Gunicorn</span>
+      <span class="tag" data-cat="cloud">Blue/green deploys</span>
+      <span class="tag" data-cat="security">JWT</span>
+      <span class="tag" data-cat="security">OAuth2</span>
+      <span class="tag" data-cat="security">GDPR</span>
+      <span class="tag" data-cat="security">ISO standards</span>
+      <span class="tag" data-cat="practice">SOLID</span>
+      <span class="tag" data-cat="practice">DDD</span>
+      <span class="tag" data-cat="practice">TDD · NUnit · xUnit</span>
+      <span class="tag" data-cat="practice">Agile / Scrum</span>
+      <span class="tag" data-cat="practice">JIRA</span>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="endpoint"><span class="verb">GET</span>/education</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu">
+      <div class="edu-card reveal">
+        <div class="yr">2024 — 2025</div>
+        <h3>MSc, Business Analytics</h3>
+        <p>Maynooth University, Ireland</p>
+      </div>
+      <div class="edu-card reveal">
+        <div class="yr">2015 — 2019</div>
+        <h3>BE, Computer Science</h3>
+        <p>Lakshmi Narain College of Technology &amp; Science, Bhopal</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:none">
+  <div class="wrap">
+    <div class="contact-band reveal">
+      <div>
+        <h2>POST /contact</h2>
+        <p>Open to backend, platform and cloud engineering roles — or a conversation about systems that need to scale. Expect a response in well under 2 seconds.*</p>
+        <p style="font-size:12px;margin-top:10px;color:var(--dim)">*Email response times may vary.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:mishraprashant494@gmail.com"><span class="k">email</span>mishraprashant494@gmail.com</a>
+        <a href="https://github.com/pmishra24" target="_blank" rel="noopener"><span class="k">github</span>github.com/pmishra24</a>
+        <a href="https://www.linkedin.com/in/prashantmishra-648252168" target="_blank" rel="noopener"><span class="k">linkedin</span>/in/prashantmishra</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Prashant Mishra</span>
+  <span class="up">● uptime: 99.9%</span>
+  <span>Dublin, Ireland · UTC+1</span>
+</footer>
+
+<script>
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- typing headline ---------- */
+  const phrases = ["stay up.","scale.","ship fast.","don't break.","stay up."];
+  const typedEl = document.getElementById('typed');
+  if (reduceMotion){ typedEl.textContent = "stay up."; document.getElementById('caret').style.display='none'; }
+  else {
+    let p=0, i=0, deleting=false;
+    function tick(){
+      const word = phrases[p];
+      if(!deleting){
+        typedEl.textContent = word.slice(0, ++i);
+        if(i===word.length){
+          if(p===phrases.length-1) return; // settle on final phrase
+          deleting=true; setTimeout(tick, 1400); return;
+        }
+        setTimeout(tick, 70);
+      } else {
+        typedEl.textContent = word.slice(0, --i);
+        if(i===0){ deleting=false; p++; setTimeout(tick, 250); return; }
+        setTimeout(tick, 38);
+      }
+    }
+    setTimeout(tick, 500);
+  }
+
+  /* ---------- Dublin clock ---------- */
+  const clockEl = document.getElementById('clock');
+  function clock(){
+    const t = new Date().toLocaleTimeString('en-IE',{timeZone:'Europe/Dublin',hour12:false});
+    clockEl.textContent = t + ' IST';
+  }
+  clock(); setInterval(clock,1000);
+
+  /* ---------- scroll spy ---------- */
+  const spyLinks = document.querySelectorAll('[data-spy]');
+  const spySections = [...spyLinks].map(a=>document.querySelector(a.getAttribute('href')));
+  const spyObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        spyLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==='#'+e.target.id));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  spySections.forEach(s=>s&&spyObs.observe(s));
+
+  /* ---------- reveal on scroll ---------- */
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+  /* ---------- count-up metrics ---------- */
+  const counters = document.querySelectorAll('[data-count]');
+  const cObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      cObs.unobserve(e.target);
+      const target = parseFloat(e.target.dataset.count);
+      const dec = parseInt(e.target.dataset.dec||0);
+      if(reduceMotion){ e.target.textContent = target.toFixed(dec); return; }
+      const dur = 1300, t0 = performance.now();
+      function step(t){
+        const k = Math.min((t-t0)/dur, 1);
+        const eased = 1-Math.pow(1-k,3);
+        e.target.textContent = (target*eased).toFixed(dec);
+        if(k<1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  },{threshold:.5});
+  counters.forEach(c=>cObs.observe(c));
+
+  /* ---------- skill filter ---------- */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const tags = document.querySelectorAll('#skill-tags .tag');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      filterBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      tags.forEach(t=>t.classList.toggle('hide', f!=='all' && t.dataset.cat!==f));
+    });
+  });
+
+  /* ---------- interactive terminal ---------- */
+  const log = document.getElementById('term-log');
+  const input = document.getElementById('term-input');
+  const body = document.getElementById('term-body');
+  const history = []; let histIdx = -1;
+
+  function line(html, cls){ const d=document.createElement('div'); if(cls)d.className=cls; d.innerHTML=html; log.appendChild(d); }
+  function scroll(){ body.scrollTop = body.scrollHeight; }
+
+  const COMMANDS = {
+    help: () => [
+      '<span class="t-dim">available commands:</span>',
+      '  <span class="t-str">whoami</span>      who is this guy',
+      '  <span class="t-str">skills</span>      tech stack',
+      '  <span class="t-str">experience</span>  work history',
+      '  <span class="t-str">education</span>   degrees',
+      '  <span class="t-str">uptime</span>      system status',
+      '  <span class="t-str">contact</span>     reach out',
+      '  <span class="t-str">github</span>      open GitHub profile',
+      '  <span class="t-str">clear</span>       clear terminal'
+    ],
+    whoami: () => [
+      '<span class="t-ok">prashant_mishra</span>',
+      'Software Engineer · Dublin, Ireland',
+      '5+ years building enterprise backend systems.',
+      'C# / .NET Core / Python · APIs · microservices · cloud.',
+      'MSc Business Analytics, Maynooth University (2025).'
+    ],
+    skills: () => [
+      '<span class="t-key">backend</span>   C#, .NET Core 6+, Python, REST, microservices',
+      '<span class="t-key">data</span>      SQL Server, PostgreSQL, MySQL, query tuning',
+      '<span class="t-key">cloud</span>     Azure, AWS EC2, Docker, CI/CD, blue/green',
+      '<span class="t-key">security</span>  JWT, OAuth2, GDPR, ISO standards',
+      '<span class="t-key">practice</span>  Clean Architecture, SOLID, DDD, TDD, Agile'
+    ],
+    experience: () => [
+      '<span class="t-num">2026—now</span>   Prime19 · Software Engineer · Dublin',
+      '<span class="t-num">2025—2026</span>  IRESI / Maynooth Univ. · Software Engineer',
+      '<span class="t-num">2022—2024</span>  Cognizant · Senior Associate · Amsterdam',
+      '<span class="t-num">2019—2022</span>  Cognizant · Associate · Pune',
+      '<span class="t-dim">scroll down for the full story ↓</span>'
+    ],
+    education: () => [
+      '<span class="t-num">2024—2025</span>  MSc Business Analytics · Maynooth University',
+      '<span class="t-num">2015—2019</span>  BE Computer Science · LNCTS Bhopal'
+    ],
+    uptime: () => [
+      '<span class="t-ok">● all systems operational</span>',
+      'prod uptime ........ <span class="t-num">99.9%</span>',
+      'response time ...... <span class="t-num">&lt;2s</span>',
+      'concurrent reqs .... <span class="t-num">10,000+</span>',
+      'coffee level ....... <span class="t-num">87%</span> <span class="t-dim">(refilling)</span>'
+    ],
+    contact: () => [
+      'email     <a class="t-link" href="mailto:mishraprashant494@gmail.com">mishraprashant494@gmail.com</a>',
+      'github    <a class="t-link" href="https://github.com/pmishra24" target="_blank" rel="noopener">github.com/pmishra24</a>',
+      'linkedin  <a class="t-link" href="https://www.linkedin.com/in/prashantmishra-648252168" target="_blank" rel="noopener">/in/prashantmishra</a>'
+    ],
+    github: () => { window.open('https://github.com/pmishra24','_blank'); return ['<span class="t-dim">opening github.com/pmishra24 …</span>']; },
+    clear: () => { log.innerHTML=''; return []; },
+    sudo: () => ['<span class="t-err">prashant is not in the sudoers file. This incident will be reported.</span> <span class="t-dim">(to no one)</span>'],
+    coffee: () => ['<span class="t-num">☕</span> brewing… <span class="t-ok">200 OK</span>'],
+    ls: () => ['experience/  skills/  education/  contact/  <span class="t-dim">secrets/ (permission denied)</span>'],
+    hello: () => ['<span class="t-ok">hey there 👋</span> type <span class="t-str">help</span> to look around'],
+    hi: () => COMMANDS.hello(),
+    exit: () => ['<span class="t-dim">nice try. you can check out any time you like…</span>']
+  };
+
+  function run(raw){
+    const cmd = raw.trim().toLowerCase();
+    line('<span class="t-prompt">➜&nbsp;~</span> <span class="t-cmd">'+raw.replace(/</g,'&lt;')+'</span>');
+    if(cmd==='') { scroll(); return; }
+    const fn = COMMANDS[cmd];
+    if(fn){ fn().forEach(l=>line(l)); }
+    else { line('<span class="t-err">command not found: '+cmd.replace(/</g,'&lt;')+'</span> <span class="t-dim">— try</span> <span class="t-str">help</span>'); }
+    scroll();
+  }
+
+  input.addEventListener('keydown', e=>{
+    if(e.key==='Enter'){
+      const v=input.value;
+      if(v.trim()) { history.push(v); histIdx=history.length; }
+      input.value='';
+      run(v);
+    } else if(e.key==='ArrowUp'){
+      if(histIdx>0){ histIdx--; input.value=history[histIdx]; e.preventDefault(); }
+    } else if(e.key==='ArrowDown'){
+      if(histIdx<history.length-1){ histIdx++; input.value=history[histIdx]; }
+      else { histIdx=history.length; input.value=''; }
+    }
+  });
+  body.addEventListener('click', ()=>input.focus());
+
+  /* boot sequence */
+  const boot = [
+    ['<span class="t-cmd">curl -s /v1/engineers/prashant</span>', 300],
+    ['<span class="t-ok">HTTP/1.1 200 OK</span>', 600],
+    ['<span class="t-dim">{</span>', 700],
+    ['  <span class="t-key">"role"</span>: <span class="t-str">"Software Engineer"</span>,', 800],
+    ['  <span class="t-key">"stack"</span>: [<span class="t-str">"C#"</span>, <span class="t-str">".NET Core"</span>, <span class="t-str">"Python"</span>],', 900],
+    ['  <span class="t-key">"uptime"</span>: <span class="t-num">"99.9%"</span>,', 1000],
+    ['  <span class="t-key">"location"</span>: <span class="t-str">"Dublin, IE"</span>', 1100],
+    ['<span class="t-dim">}</span>', 1200],
+    ['<span class="t-dim">type</span> <span class="t-str">help</span> <span class="t-dim">to explore →</span>', 1700]
+  ];
+  boot.forEach(([html, delay])=>{
+    setTimeout(()=>{ line(html); scroll(); }, reduceMotion ? 0 : delay);
+  });
+})();
+</script>
+
+</body>
+</html>
